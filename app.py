@@ -44,8 +44,8 @@ def index():
         # Cast every object into dict
         result = [dict(u) for u in usuarios]
         return Response(response=json.dumps({"status": "success", "data": result}), status=200, content_type="application/json")
-    except ValueError as e:
-        return Response(response=json.dumps({"status": "success", "data": {"Erro": f">>{e}"}}), status=200, content_type="application/json")
+    except Exception as e:
+        return Response(response=json.dumps({"status": "success", "data": {f"{type(e).__name__}": f">>{e}"}}), status=200, content_type="application/json")
 
 
 @app.route("/add", methods=["POST"])
