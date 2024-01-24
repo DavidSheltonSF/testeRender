@@ -27,8 +27,8 @@ class Usuario(db.Model):
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
-#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
 # It's important to use session
 app.secret_key = "$$$581489*@Abscaracha"
 
