@@ -29,8 +29,10 @@ class Usuario(db.Model):
 app = Flask(__name__)
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
+# Inicia e configura o banco de dados
 db.init_app(app=app)
-with app.test_request_context():
+# Crea as tabelas apenas se a aplicação estiver pronta
+with app.app_context():
     db.create_all()
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_RECORD_QUERIES"] = True
@@ -81,12 +83,15 @@ def delete(userid):
     usuario = Usuario.query.where(Usuario.id == userid).first()
     db.session.delete(usuario)
     db.session.commit()
+
     return Response(response=json.dumps({"status": "success", "data": usuario.to_dict()}), status=200, content_type="application/json")
 
+@app.route("/dropTable", methods=["DELETE"])
+def delete(userid):
+    db.session.execute("DROP TABLE usuario")
+    db.session.commit()
+
+    return Response(response=json.dumps({"status": "success", "message": "Tabela deletada"}), status=200, content_type="application/json")
+
 if __name__ == "__main__":
-    # Inicia e configura o banco de dados
-    # db.init_app(app=app)
-    # Crea as tabelas apenas se a aplicação estiver pronta
-    # with app.test_request_context():
-    #     db.create_all()
     app.run(debug=True)
