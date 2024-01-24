@@ -41,7 +41,6 @@ def index():
     # Cast every object into dict
     result = [u.to_dict() for u in usuarios]
     return Response(response=json.dumps({"status": "success", "data": result}), status=200, content_type="application/json")
-    return {}
 
 
 @app.route("/add", methods=["POST"])
