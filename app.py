@@ -30,7 +30,8 @@ app = Flask(__name__)
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
 db.init_app(app=app)
-db.create_all()
+with app.test_request_context():
+    db.create_all()
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_RECORD_QUERIES"] = True
 
