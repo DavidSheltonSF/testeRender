@@ -1,7 +1,6 @@
 from flask import Flask, Response, request
 import json
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import text
 
 db = SQLAlchemy()
 
@@ -42,7 +41,7 @@ def index():
         usuarios = Usuario.query.all()
 
         # Cast every object into dict
-        result = [dict(u) for u in usuarios]
+        result = [u.to_dict() for u in usuarios]
         return Response(response=json.dumps({"status": "success", "data": result}), status=200, content_type="application/json")
     except Exception as e:
         return Response(response=json.dumps({"status": "success", "data": {f"{type(e).__name__}": f">>{e}"}}), status=200, content_type="application/json")
@@ -82,6 +81,6 @@ if __name__ == "__main__":
     # Inicia e configura o banco de dados
     db.init_app(app=app)
     # Crea as tabelas apenas se a aplicação estiver pronta
-    with app.test_request_context():
+    with app.app_context(): #test_request_context():
         db.create_all()
-    app.run(debug=True)
+        app.run(debug=True)
