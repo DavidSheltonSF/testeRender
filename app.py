@@ -1,6 +1,7 @@
 from flask import Flask, Response, request
 import json
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 db = SQLAlchemy()
 
@@ -27,8 +28,8 @@ class Usuario(db.Model):
 
 
 app = Flask(__name__)
-#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///usuarios.sqlite3"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://usuarios_kjjr_user:VHefx8aIdMDHE4LF12BdEXXEHlKeZk0I@dpg-cmniuqla73kc73auknh0-a/usuarios_kjjr"
 # It's important to use session
 app.secret_key = "$$$581489*@Abscaracha"
 
@@ -37,10 +38,14 @@ app.secret_key = "$$$581489*@Abscaracha"
 def index():
     # Is returned an iterator with
     #  all users
-    usuarios = Usuario.query.all()
-    # Cast every object into dict
-    #result = [u.to_dict() for u in usuarios]
-    return Response(response=json.dumps({"status": "success", "data": {}}), status=200, content_type="application/json")
+    try:
+        usuarios = Usuario.query.all()
+
+        # Cast every object into dict
+        result = [dict(u) for u in usuarios]
+        return Response(response=json.dumps({"status": "success", "data": result}), status=200, content_type="application/json")
+    except:
+        return Response(response=json.dumps({"status": "success", "data": {}}), status=200, content_type="application/json")
 
 
 @app.route("/add", methods=["POST"])
