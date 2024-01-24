@@ -37,10 +37,10 @@ app.secret_key = "$$$581489*@Abscaracha"
 def index():
     # Is returned an iterator with
     #  all users
-    usuarios = Usuario.query.all()
+    #usuarios = Usuario.query.all()
     # Cast every object into dict
-    result = [u.to_dict() for u in usuarios]
-    return Response(response=json.dumps({"status": "success", "data": result}), status=200, content_type="application/json")
+    #result = [u.to_dict() for u in usuarios]
+    return Response(response=json.dumps({"status": "success", "data": {}}), status=200, content_type="application/json")
 
 
 @app.route("/add", methods=["POST"])
