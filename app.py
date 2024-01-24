@@ -87,7 +87,7 @@ def delete(userid):
     return Response(response=json.dumps({"status": "success", "data": usuario.to_dict()}), status=200, content_type="application/json")
 
 @app.route("/dropTable", methods=["DELETE"])
-def delete(userid):
+def dropTable():
     db.session.execute("DROP TABLE usuario")
     db.session.commit()
 
