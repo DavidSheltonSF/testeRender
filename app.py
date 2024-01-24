@@ -79,4 +79,4 @@ if __name__ == "__main__":
     # Crea as tabelas apenas se a aplicação estiver pronta
     with app.test_request_context():
         db.create_all()
-    app.run(debug=True, port=10000, host="0.0.0.0")
+    app.run(debug=True)
