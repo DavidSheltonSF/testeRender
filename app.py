@@ -1,6 +1,7 @@
 from flask import Flask, Response, request
 import json
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 db = SQLAlchemy()
 
@@ -88,7 +89,7 @@ def delete(userid):
 
 @app.route("/dropTable", methods=["DELETE", "GET"])
 def dropTable():
-    db.session.execute("DROP TABLE usuario")
+    db.session.execute(text("DROP TABLE usuario"))
     db.session.commit()
 
     return Response(response=json.dumps({"status": "success", "message": "Tabela deletada"}), status=200, content_type="application/json")
